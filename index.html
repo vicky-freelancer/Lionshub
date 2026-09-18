@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Defensive polyfill/interceptor: Ensure window.fetch is writable and doesn't throw if assigned to
+      (function() {
+        try {
+          if (typeof window !== 'undefined') {
+            var originalFetch = window.fetch ? window.fetch.bind(window) : null;
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return originalFetch;
+              },
+              set: function(fn) {
+                originalFetch = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+
+            // Suppress benign Vite dev WebSocket HMR disconnection unhandled rejections
+            window.addEventListener('unhandledrejection', function(event) {
+              if (event && event.reason && (
+                (typeof event.reason === 'string' && event.reason.includes('WebSocket closed without opened')) ||
+                (event.reason.message && event.reason.message.includes('WebSocket closed without opened'))
+              )) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            });
+          }
+        } catch (e) {
+          // Fallback if property definition is restricted
+        }
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LionsHub - Community Business Directory | Powered by nexusdigilancer</title>
+    <meta name="description" content="LionsHub - Local community business directory powered by nexusdigilancer. Discover services, shops, and providers near you." />
+    <meta property="og:title" content="LionsHub - Community Business Directory" />
+    <meta property="og:description" content="Community business directory powered by nexusdigilancer." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

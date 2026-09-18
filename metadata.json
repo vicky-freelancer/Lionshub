@@ -1,0 +1,6 @@
+{
+  "name": "LionsHub - Trichy Community Business Directory",
+  "description": "LionsHub - Trichy's local community business directory powered by nexusdigilancer. Discover local businesses, services, products, schools, advisors, and verified providers across Tiruchirappalli with direct WhatsApp/phone contact and free business listing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
